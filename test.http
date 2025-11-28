@@ -1,0 +1,57 @@
+### Quarkus REST API Test File
+### Environment: http://localhost:8080
+
+@name = "Quarkus Membership API"
+@hostname = localhost
+@port = 8080
+
+### 1. User Registration
+POST {{hostname}}:{{port}}/api/v1/registration
+Content-Type: application/json
+
+# Valid registration request
+{
+  "email": "johndoe@example.com",
+  "firstName": "John",
+  "lastName": "Doe",
+  "password": "Password123!"
+}
+
+### 2. User Login
+POST {{hostname}}:{{port}}/api/v1/login
+Content-Type: application/json
+
+{
+  "email": "johndoe@example.com",
+  "password": "Password123!"
+}
+
+### 3. Get User Profile
+GET {{hostname}}:{{port}}/api/v1/profile
+Authorization: Bearer <JWT_TOKEN_HERE>
+
+### 4. Update User Profile
+PUT {{hostname}}:{{port}}/api/v1/profile/update
+Content-Type: application/json
+Authorization: Bearer <JWT_TOKEN_HERE>
+
+{
+  "firstName": "John Updated",
+  "lastName": "Doe Updated"
+}
+
+### 5. Get All Users (Admin only)
+GET {{hostname}}:{{port}}/api/v1/users
+Authorization: Bearer <JWT_TOKEN_HERE>
+
+### 6. Swagger UI Documentation
+GET {{hostname}}:{{port}}/swagger-ui
+
+### 7. OpenAPI Specification
+GET {{hostname}}:{{port}}/openapi
+
+### 8. Health Check
+GET {{hostname}}:{{port}}/api/v1/health
+
+### 9. Application Info
+GET {{hostname}}:{{port}}/api/v1/info
