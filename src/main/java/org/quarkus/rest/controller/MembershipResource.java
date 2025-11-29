@@ -46,6 +46,7 @@ public class MembershipResource {
     @Inject
     JsonWebToken jwt;
 
+  
     @POST
     @Path("/registration")
     @Transactional
@@ -134,30 +135,37 @@ public class MembershipResource {
         )
         @Valid LoginRequest request) {
         try {
+            System.out.println("DEBUG: Login attempt for email: " + request.getEmail());
+
             // Find user by email
             User user = userRepository.findByEmail(request.getEmail())
                     .orElse(null);
 
             if (user == null) {
+                System.out.println("DEBUG: User not found");
                 return Response.status(Response.Status.UNAUTHORIZED)
                         .entity(ApiResponse.error("Invalid email or password"))
                         .build();
             }
 
+            System.out.println("DEBUG: User found, verifying password");
             // Verify password using bcrypt
             if (!passwordService.verify(request.getPassword(), user.getPassword())) {
+                System.out.println("DEBUG: Password verification failed");
                 return Response.status(Response.Status.UNAUTHORIZED)
                         .entity(ApiResponse.error("Invalid email or password"))
                         .build();
             }
 
+            System.out.println("DEBUG: Password verified, generating JWT token");
             // Generate JWT token
             String token = tokenService.generateToken(user.getEmail());
+            System.out.println("DEBUG: JWT token generated successfully");
 
             LoginResponse loginResponse = new LoginResponse(token);
 
             return Response.ok()
-                    .entity(ApiResponse.success("Login Sukses", loginResponse))
+                    .entity(ApiResponse.success("login successful", loginResponse))
                     .build();
 
         } catch (Exception e) {
@@ -220,7 +228,7 @@ public class MembershipResource {
             );
 
             return Response.ok()
-                    .entity(ApiResponse.success("Sukses", profileResponse))
+                    .entity(ApiResponse.success("successful", profileResponse))
                     .build();
 
         } catch (Exception e) {

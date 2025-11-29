@@ -10,15 +10,26 @@ import org.eclipse.microprofile.jwt.Claims;
 public class TokenService {
 
     public String generateToken(String email) {
-        Instant now = Instant.now();
+        try {
+            System.out.println("DEBUG: TokenService.generateToken called for email: " + email);
+            Instant now = Instant.now();
 
-        return Jwt.issuer("https://yourdomain.com")
-                .upn(email)
-                .claim(Claims.email.name(), email)
-                .groups("User")
-                .issuedAt(now)
-                .expiresAt(now.plus(12, ChronoUnit.HOURS)) // 12 hours expiration
-                .sign();
+            System.out.println("DEBUG: Building JWT claims");
+            String token = Jwt.claims()
+                    .upn(email)
+                    .claim(Claims.email.name(), email)
+                    .groups("User")
+                    .issuedAt(now)
+                    .expiresAt(now.plus(12, ChronoUnit.HOURS)) // 12 hours expiration
+                    .sign();
+
+            System.out.println("DEBUG: JWT token generated successfully, length: " + token.length());
+            return token;
+        } catch (Exception e) {
+            System.out.println("DEBUG: Exception in TokenService.generateToken: " + e.getClass().getSimpleName() + ": " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     public String refreshToken(String email) {

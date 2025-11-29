@@ -73,7 +73,11 @@ Aplikasi akan berjalan di `http://localhost:8080`
 1. Jalankan PostgreSQL dengan Docker:
 
 ```bash
-docker-compose up -d
+mvn clean install -DskipTests
+```
+
+```bash
+docker-compose up -d postgres
 ```
 
 2. Jalankan aplikasi:

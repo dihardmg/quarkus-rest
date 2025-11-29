@@ -29,6 +29,10 @@ services:
       QUARKUS_HIBERNATE_ORM_DATABASE_GENERATION: update
       QUARKUS_HIBERNATE_ORM_SQL_LOAD_SCRIPT: import.sql
       QUARKUS_PROFILE: "prod"
+      SMALLRYE_JWT_SIGN_KEY: "secret"
+      SMALLRYE_JWT_SIGN_KEY_SECRET: "secret"
+      MP_JWT_VERIFY_SECRETKEY: "secret"
+      SMALLRYE_JWT_VERIFY_ALGORITHM: "HS256"
       JAVA_OPTS_APPEND: "-Dquarkus.http.host=0.0.0.0"
     ports:
       - "8080:8080"
