@@ -2,37 +2,37 @@
 
 ![Project Overview](img/1.png)
 
-Project ini adalah REST API untuk manajemen membership yang dibangun dengan Quarkus, framework Java yang supersonik dan subatomik. API ini menyediakan fitur registrasi, login, dan manajemen profil pengguna dengan autentikasi JWT.
+This project is a REST API for membership management built with Quarkus, the supersonic and subatomic Java framework. This API provides user registration, login, and profile management features with JWT authentication.
 
-## 🚀 Fitur Utama
+## 🚀 Key Features
 
-- **Registrasi Pengguna**: Pendaftaran pengguna baru dengan validasi email
-- **Autentikasi JWT**: Login dengan token JWT yang aman
-- **Manajemen Profil**: Lihat dan update profil pengguna
-- **Validasi Input**: Validasi data input dengan Jakarta Bean Validation
-- **Dokumentasi API**: OpenAPI 3.0 dengan Swagger UI
-- **Database PostgreSQL**: Persistensi data dengan Hibernate ORM Panache
-- **Keamanan**: Konfigurasi keamanan berbasis peran dan path
+- **User Registration**: New user registration with email validation
+- **JWT Authentication**: Secure login with JWT tokens
+- **Profile Management**: View and update user profiles
+- **Input Validation**: Input data validation with Jakarta Bean Validation
+- **API Documentation**: OpenAPI 3.0 with Swagger UI
+- **PostgreSQL Database**: Data persistence with Hibernate ORM Panache
+- **Security**: Role-based and path-based security configuration
 
-## 📋 Prasyarat
+## 📋 Prerequisites
 
-- Java 17 atau versi lebih tinggi
+- Java 17 or higher
 - Apache Maven 3.8.1+
 - PostgreSQL 12+
-- Docker (opsional, untuk menjalankan database)
+- Docker (optional, for running the database)
 
-## 🛠️ Teknologi yang Digunakan
+## 🛠️ Technologies Used
 
-- **Quarkus 3.30.1**: Framework Java modern
-- **Jakarta REST**: Implementasi REST API
-- **Hibernate ORM dengan Panache**: ORM yang disederhanakan
-- **PostgreSQL**: Database relasional
-- **JWT (JSON Web Token)**: Autentikasi stateless
-- **SmallRye OpenAPI**: Dokumentasi API
-- **Lombok**: Pengurangan boilerplate code
-- **Bean Validation**: Validasi data input
+- **Quarkus 3.30.1**: Modern Java framework
+- **Jakarta REST**: REST API implementation
+- **Hibernate ORM with Panache**: Simplified ORM
+- **PostgreSQL**: Relational database
+- **JWT (JSON Web Token)**: Stateless authentication
+- **SmallRye OpenAPI**: API documentation
+- **Lombok**: Boilerplate code reduction
+- **Bean Validation**: Input data validation
 
-## 🏗️ Struktur Project
+## 🏗️ Project Structure
 
 ```
 src/main/java/org/quarkus/rest/
@@ -54,23 +54,23 @@ src/main/java/org/quarkus/rest/
     └── TokenService.java            # JWT token generation
 ```
 
-## 🚀 Menjalankan Aplikasi
+## 🚀 Running the Application
 
-### Mode Development
+### Development Mode
 
-Jalankan aplikasi dalam mode development yang mendukung live coding:
+Run the application in development mode with live coding support:
 
 ```bash
 ./mvnw quarkus:dev
 ```
 
-Aplikasi akan berjalan di `http://localhost:8080`
+The application will run at `http://localhost:8080`
 
-> **Catatan**: Quarkus menyediakan Dev UI yang dapat diakses di `http://localhost:8080/q/dev/`
+> **Note**: Quarkus provides Dev UI accessible at `http://localhost:8080/q/dev/`
 
-### Menjalankan dengan Docker
+### Running with Docker
 
-1. Jalankan PostgreSQL dengan Docker:
+1. Run PostgreSQL with Docker:
 
 ```bash
 mvn clean install -DskipTests
@@ -80,23 +80,23 @@ mvn clean install -DskipTests
 docker-compose up -d postgres
 ```
 
-2. Jalankan aplikasi:
+2. Run the application:
 
 ```bash
 ./mvnw quarkus:dev
 ```
 
-## 📦 Packaging dan Deployment
+## 📦 Packaging and Deployment
 
-### Packaging Aplikasi
+### Application Packaging
 
 ```bash
 ./mvnw package
 ```
 
-Ini akan menghasilkan file `quarkus-run.jar` di direktori `target/quarkus-app/`.
+This will generate the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
 
-### Membuat Uber-JAR
+### Creating Uber-JAR
 
 ```bash
 ./mvnw package -Dquarkus.package.jar.type=uber-jar
@@ -108,7 +108,7 @@ Ini akan menghasilkan file `quarkus-run.jar` di direktori `target/quarkus-app/`.
 ./mvnw package -Dnative
 ```
 
-Atau jika tidak memiliki GraalVM:
+Or if you don't have GraalVM:
 
 ```bash
 ./mvnw package -Dnative -Dquarkus.native.container-build=true
@@ -118,13 +118,13 @@ Atau jika tidak memiliki GraalVM:
 
 ### Swagger UI
 
-Akses dokumentasi API interaktif di:
+Access interactive API documentation at:
 - **Swagger UI**: `http://localhost:8080/swagger-ui`
 - **OpenAPI Spec**: `http://localhost:8080/openapi`
 
 ### API Endpoints
 
-#### 1. Registrasi Pengguna
+#### 1. User Registration
 
 ```http
 POST /api/v1/registration
@@ -150,14 +150,14 @@ Content-Type: application/json
 }
 ```
 
-#### 3. Get Profile (Membutuhkan JWT)
+#### 3. Get Profile (Requires JWT)
 
 ```http
 GET /api/v1/profile
 Authorization: Bearer <JWT_TOKEN>
 ```
 
-#### 4. Update Profile (Membutuhkan JWT)
+#### 4. Update Profile (Requires JWT)
 
 ```http
 PUT /api/v1/profile/update
@@ -170,11 +170,11 @@ Authorization: Bearer <JWT_TOKEN>
 }
 ```
 
-## 🔧 Konfigurasi
+## 🔧 Configuration
 
 ### Database
 
-Konfigurasi database ada di `src/main/resources/application.properties`:
+Database configuration is in `src/main/resources/application.properties`:
 
 ```properties
 quarkus.datasource.jdbc.url=jdbc:postgresql://localhost:5432/quarkus_db
@@ -184,7 +184,7 @@ quarkus.datasource.password=quarkus_password
 
 ### JWT
 
-Konfigurasi JWT:
+JWT configuration:
 
 ```properties
 smallrye.jwt.sign.key.location=/deployments/jwt-secret-key
@@ -193,16 +193,16 @@ smallrye.jwt.token.header=Authorization
 smallrye.jwt.token.scheme=Bearer
 ```
 
-### Keamanan
+### Security
 
-Konfigurasi keamanan path:
+Path security configuration:
 
 ```properties
-# Path yang membutuhkan autentikasi
+# Paths requiring authentication
 quarkus.http.auth.permission.authenticated.paths=/api/v1/profile,/api/v1/profile/update
 quarkus.http.auth.permission.authenticated.policy=authenticated
 
-# Path publik
+# Public paths
 quarkus.http.auth.permission.public.paths=/api/v1/registration,/api/v1/login,/openapi,/swagger-ui
 quarkus.http.auth.permission.public.policy=permit
 ```
@@ -211,41 +211,41 @@ quarkus.http.auth.permission.public.policy=permit
 
 ### HTTP Request File
 
-Project menyertakan file `test.http` untuk testing API dengan VS Code REST Client extension.
+The project includes a `test.http` file for testing the API with the VS Code REST Client extension.
 
-### Menjalankan Tests
+### Running Tests
 
 ```bash
 ./mvnw test
 ```
 
-## 🔐 Keamanan
+## 🔐 Security
 
-- **Password**: Saat ini disimpan sebagai plain text (untuk development)
-- **JWT Token**: Berlaku selama 12 jam
-- **Input Validation**: Menggunakan Jakarta Bean Validation
-- **Path Security**: Konfigurasi keamanan berbasis path
+- **Password**: Currently stored as plain text (for development)
+- **JWT Token**: Valid for 12 hours
+- **Input Validation**: Using Jakarta Bean Validation
+- **Path Security**: Path-based security configuration
 
-## 🚨 Catatan Penting
+## 🚨 Important Notes
 
-1. **Password Hashing**: Untuk production, implementasikan password hashing dengan BCrypt atau Argon2
-2. **Environment Variables**: Gunakan environment variables untuk konfigurasi sensitif
-3. **HTTPS**: Aktifkan HTTPS untuk production
-4. **Rate Limiting**: Pertimbangkan untuk menambahkan rate limiting pada endpoint login
-5. **CORS**: Konfigurasi CORS jika frontend dan backend terpisah
+1. **Password Hashing**: For production, implement password hashing with BCrypt or Argon2
+2. **Environment Variables**: Use environment variables for sensitive configuration
+3. **HTTPS**: Enable HTTPS for production
+4. **Rate Limiting**: Consider adding rate limiting to login endpoints
+5. **CORS**: Configure CORS if frontend and backend are separate
 
 ## 📈 Monitoring
 
-Quarkus menyediakan berbagai endpoint untuk monitoring:
+Quarkus provides various endpoints for monitoring:
 
 - Health Check: `http://localhost:8080/q/health`
 - Metrics: `http://localhost:8080/q/metrics`
 - Info: `http://localhost:8080/q/info`
 
 
-Project ini dilisensikan under MIT License - lihat file [LICENSE](LICENSE) untuk detailnya.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🔗 Link Penting
+## 🔗 Important Links
 
 - [Quarkus Documentation](https://quarkus.io/guides/)
 - [Quarkus Getting Started](https://quarkus.io/guides/getting-started)
