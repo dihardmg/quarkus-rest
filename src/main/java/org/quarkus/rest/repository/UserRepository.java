@@ -12,10 +12,7 @@ public class UserRepository implements PanacheRepository<User> {
         return find("email", email).firstResultOptional();
     }
 
-    public Optional<User> findByEmailAndPassword(String email, String password) {
-        return find("email = ?1 and password = ?2", email, password).firstResultOptional();
-    }
-
+  
     public boolean existsByEmail(String email) {
         return count("email", email) > 0;
     }

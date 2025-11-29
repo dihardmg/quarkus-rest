@@ -4,6 +4,7 @@ import org.quarkus.rest.dto.*;
 import org.quarkus.rest.entity.User;
 import org.quarkus.rest.repository.UserRepository;
 import org.quarkus.rest.service.TokenService;
+import org.quarkus.rest.service.PasswordService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -38,6 +39,9 @@ public class MembershipResource {
 
     @Inject
     TokenService tokenService;
+
+    @Inject
+    PasswordService passwordService;
 
     @Inject
     JsonWebToken jwt;
@@ -84,7 +88,7 @@ public class MembershipResource {
             user.setEmail(request.getEmail());
             user.setFirstName(request.getFirstName());
             user.setLastName(request.getLastName());
-            user.setPassword(request.getPassword());
+            user.setPassword(passwordService.encrypt(request.getPassword()));
             user.setProfileImage("https://yoururlapi.com/profile.jpeg"); // Default profile image
 
             userRepository.persist(user);
@@ -130,11 +134,18 @@ public class MembershipResource {
         )
         @Valid LoginRequest request) {
         try {
-            // Find user by email and password
-            User user = userRepository.findByEmailAndPassword(request.getEmail(), request.getPassword())
+            // Find user by email
+            User user = userRepository.findByEmail(request.getEmail())
                     .orElse(null);
 
             if (user == null) {
+                return Response.status(Response.Status.UNAUTHORIZED)
+                        .entity(ApiResponse.error("Invalid email or password"))
+                        .build();
+            }
+
+            // Verify password using bcrypt
+            if (!passwordService.verify(request.getPassword(), user.getPassword())) {
                 return Response.status(Response.Status.UNAUTHORIZED)
                         .entity(ApiResponse.error("Invalid email or password"))
                         .build();
